@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import state from "./redux/state";
 
-export type PostsType = {
+/*export type PostsType = {
     id: number
     message: string
     likesCount: number
@@ -42,12 +43,10 @@ let messages = [
     {id: 3, message: 'Yo'},
     {id: 4, message: 'Yo'},
     {id: 5, message: 'Yo'}
-]
+]*/
 
 ReactDOM.render(
-    <App posts={posts}
-         dialogs={dialogs}
-         messages={messages}/>,
+    <App state={state}/>,
   document.getElementById('root')
 );
 
