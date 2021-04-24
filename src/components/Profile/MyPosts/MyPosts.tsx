@@ -1,11 +1,14 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {ProfilePageType} from "../../../redux/state";
+import {PostType, ProfilePageType} from "../../../redux/state";
 
+type PropsMyPostsType = {
+    posts: Array<PostType>
+    addPost: (postMessage: string) => void
+}
 
-
-function MyPosts(props: ProfilePageType) {
+function MyPosts(props: PropsMyPostsType) {
 
     let postsElements =
         props.posts.map( p => <Post message={p.message} likesCount={p.likesCount}/>);
@@ -13,8 +16,9 @@ function MyPosts(props: ProfilePageType) {
     let newPostsElement = React.createRef<HTMLTextAreaElement>();
 
     let addPost = () => {
-        let text = newPostsElement.current?.value;
-        alert(text);
+        if (newPostsElement.current) {
+            props.addPost(newPostsElement.current.value)
+        }
     }
 
     return (
