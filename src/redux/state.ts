@@ -1,3 +1,5 @@
+import {renderEntireTree} from "../render";
+
 export type PostType = {
     id: number
     message: string
@@ -65,6 +67,7 @@ export let addPost = (postMessage: string) => {
     }
 
     state.profilePage.posts.push(newPost);
+    renderEntireTree(state);
 }
 
 
