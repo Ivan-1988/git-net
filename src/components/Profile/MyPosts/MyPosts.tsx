@@ -1,32 +1,39 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {PostType} from "../../../redux/state";
+import {AddPostActionType, PostType, UpdateNewPostTextType} from "../../../redux/state";
 
 type PropsMyPostsType = {
     posts: Array<PostType>
-    newPostText:string
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    newPostText: string
+    // addPost: () => void
+    // updateNewPostText: (newText: string) => void
+    dispatch: (action: AddPostActionType | UpdateNewPostTextType) => void
 }
 
 function MyPosts(props: PropsMyPostsType) {
 
     let postsElements =
-        props.posts.map( p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>);
+        props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>);
 
     let newPostsElement = React.createRef<HTMLTextAreaElement>();
 
     let addPost = () => {
         if (newPostsElement.current) {
-            props.addPost();
+            //props.addPost();
+            props.dispatch({type: 'ADD-POST'});
         }
     }
 
     let onPostChange = () => {
-        if (newPostsElement.current){
+        if (newPostsElement.current) {
             let text = newPostsElement.current.value;
-            props.updateNewPostText(text);
+            //props.updateNewPostText(text)
+            let action: UpdateNewPostTextType = {
+                type: 'UPDATE-NEW-POST-TEXT',
+                newText: text
+            };
+            props.dispatch(action);
         }
     }
 
@@ -41,7 +48,7 @@ function MyPosts(props: PropsMyPostsType) {
                     />
                 </div>
                 <div>
-                    <button onClick={ addPost }>Add post</button>
+                    <button onClick={addPost}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>
