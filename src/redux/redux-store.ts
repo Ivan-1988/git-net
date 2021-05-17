@@ -15,3 +15,6 @@ let store = createStore(reducers);
 export default store;
 
 //type AppStateType = ReturnType<typeof reducers>
+//type AppStateType = ReturnType<typeof reducers>
+//export type StoreType = typeof rootReducer
+// export type AppStateType = ReturnType<StoreType>
