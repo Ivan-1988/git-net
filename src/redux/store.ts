@@ -2,10 +2,6 @@ import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 
-/*const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY';
-const SEND_MESSAGE = 'SEND_MESSAGE';*/
 
 export type PostType = {
     id: number
@@ -125,23 +121,6 @@ const store: StoreType = {
 
     }
 }
-
-/*type addPostActionCreatorType = ReturnType<typeof addPostActionCreator>
-type updateNewPostTextActionCreatorType = ReturnType<typeof updateNewPostTextActionCreator>
-type sendMessageCreatorType = ReturnType<typeof sendMessageCreator>
-type updateNewMessageBodyCreatorType = ReturnType<typeof updateNewMessageBodyCreator>*/
-
-/*export const addPostActionCreator = () => ({type: ADD_POST} as const)
-export const updateNewPostTextActionCreator = (text: string) =>
-    ({
-        type: UPDATE_NEW_POST_TEXT,
-        newText: text
-    } as const)*/
-
-/*export const sendMessageCreator = () => ({type: SEND_MESSAGE} as const)
-export const updateNewMessageBodyCreator = (text: string) =>
-    ({type: UPDATE_NEW_MESSAGE_BODY, body: text} as const)*/
-
 
 export default store;
 
