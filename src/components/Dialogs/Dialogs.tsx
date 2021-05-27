@@ -4,16 +4,17 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {MessagePageType, StoreType} from "../../redux/store";
 import {sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/dialogs-reducer";
+import {DialogsPropsType, MapDispatchToPropsType, MapStateToPropsType} from "./DialogsContainer";
 
 
-type propsDialogType = {
-    // store: StoreType
-    updateNewMessageBody: (body: string) => void
-    sendMessage: () => void
-    dialogsPage: MessagePageType
-}
+// type propsDialogType = {
+//     // store: StoreType
+//     // updateNewMessageBody: (body: string) => void
+//     // sendMessage: () => void
+//     // dialogsPage: MessagePageType
+// }
 
-function Dialogs(props: propsDialogType) {
+function Dialogs(props: DialogsPropsType) {
     let state = props.dialogsPage
 
     let dialogsElements = state.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>);

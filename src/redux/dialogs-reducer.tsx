@@ -14,7 +14,7 @@ type DialogType = {
     name: string
 };
 
-type MessagePageType = {
+export type InitialStateType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
     newMessageBody: string
@@ -39,8 +39,8 @@ let initialState = {
     newMessageBody: ''
 }
 
-const dialogsReducer = (state: MessagePageType = initialState, action: ActionsTypes) => {
-    switch (action.type){
+const dialogsReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+    switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
             state.newMessageBody = action.body;
             return state;
@@ -52,17 +52,6 @@ const dialogsReducer = (state: MessagePageType = initialState, action: ActionsTy
         default:
             return state;
     }
-
-/*    if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-        state.newMessageBody = action.body;
-
-    }else if (action.type === SEND_MESSAGE) {
-        let body = state.newMessageBody;
-        state.newMessageBody = '';
-        state.messages.push({id: 6, message: body});
-    }
-
-    return state;*/
 }
 
 type sendMessageCreatorType = ReturnType<typeof sendMessageCreator>

@@ -8,32 +8,29 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {ActionsTypes, RootStateType, StoreType,} from './redux/store';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
-export type stateType = {
-    // state: RootStateType
-    // dispatch: (action: ActionsTypes) => void
-    store: any
-    // updateNewPostText: (newText: string) => void
-    // type updateNewPostTextActionCreatorType = ReturnType<typeof updateNewPostTextActionCreator>
-}
 
-function App(props: stateType) {
+// export type stateType = {
+//     // state: RootStateType
+//     // dispatch: (action: ActionsTypes) => void
+//     store: any
+//     // updateNewPostText: (newText: string) => void
+//     // type updateNewPostTextActionCreatorType = ReturnType<typeof updateNewPostTextActionCreator>
+// }
+
+function App(props: any) {
     return (
-        <BrowserRouter>
+        // <BrowserRouter>
             <div className='app-wrapper'>
                 <Header/>
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
-                    <Route path={'/dialogs'} render={() => <DialogsContainer store={props.store} />}/>
+                    <Route path={'/dialogs'} render={() => <DialogsContainer />}/>
                     <Route path={'/profile'}
-                           render={() => <Profile
-                               store={props.store}
-                               // profilePage={props.state.profilePage}
-                               // dispatch={props.store.dispatch}
-                           />}/>
+                           render={() => <Profile/>}/>
                 </div>
 
             </div>
-        </BrowserRouter>
+        // </BrowserRouter>
     );
 }
 

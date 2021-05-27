@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './Profile.module.css';
-import MyPosts from "./MyPosts/MyPosts";
+//import MyPosts, {MyPostsContainer} from "./MyPosts/MyPosts";
+// import MyPosts, {MyPostsContainer} from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {ActionsTypes, ProfilePageType,} from "../../redux/store";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
@@ -11,13 +12,11 @@ export type PropsPostsType = {
     store: any
 }
 
-function Profile(props: PropsPostsType) {
+function Profile() {
 
     return <div>
         <ProfileInfo/>
-        <MyPostsContainer
-            store={props.store}
-        />
+        <MyPostsContainer />
     </div>
 
 }

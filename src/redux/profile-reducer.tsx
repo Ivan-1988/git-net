@@ -10,7 +10,7 @@ export type PostType = {
     likesCount: number
 }
 
-export type ProfilePageType = {
+export type InitialStateType = {
     posts: Array<PostType>
     newPostText: string
 }
@@ -25,7 +25,7 @@ let initialState = {
         newPostText: 'it-kamasutra.com'
     }
 
-const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
+const profileReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
     switch(action.type){
         case ADD_POST:
             let newPost: PostType = {
