@@ -3,23 +3,11 @@ import './App.css';
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
-import {BrowserRouter, Route} from "react-router-dom";
-import {ActionsTypes, RootStateType, StoreType,} from './redux/store';
+import {Route} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
-
-// export type stateType = {
-//     // state: RootStateType
-//     // dispatch: (action: ActionsTypes) => void
-//     store: any
-//     // updateNewPostText: (newText: string) => void
-//     // type updateNewPostTextActionCreatorType = ReturnType<typeof updateNewPostTextActionCreator>
-// }
-
-function App(props: any) {
+function App() {
     return (
-        // <BrowserRouter>
             <div className='app-wrapper'>
                 <Header/>
                 <Navbar/>
@@ -30,7 +18,6 @@ function App(props: any) {
                 </div>
 
             </div>
-        // </BrowserRouter>
     );
 }
 
