@@ -6,19 +6,19 @@ import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/redux-store";
 import {Dispatch} from "redux";
-import {MapDispatchToPropsType} from "../../Dialogs/DialogsContainer";
+
 
 export type MapStateToPropsType = {
     posts: Array<PostType>
     newPostText: string
 }
 
-export type mapDispatchToPropsType ={
+export type MapDispatchToPropsType ={
     updateNewPostText: (text: string) => void
     addPost: () => void
 }
 
-export type MyPostsType = MapStateToPropsType & MapDispatchToPropsType
+// export type MyPostsType = MapStateToPropsType & MapDispatchToPropsType
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
@@ -27,7 +27,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
         updateNewPostText: (text: string) => {
             let action = updateNewPostTextActionCreator(text);
