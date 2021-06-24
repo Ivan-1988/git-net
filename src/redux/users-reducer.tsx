@@ -5,20 +5,23 @@ const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 
-export type UsersType = {
-    id: number
-    photoUrl: string
-    followed: boolean
-    fullName: string
-    status: string
-    location: {
-        city: string
-        country: string
-    }
+type PhotoType = {
+    small: null | string
+    large: null | string
 }
 
+export type UserType = {
+    name: string
+    id: number
+    uniqueUrlName: null | string
+    photos: PhotoType
+    status: string
+    followed: boolean
+}
+
+
 export type InitialStateType = {
-    users: Array<UsersType>
+    users: Array<UserType>
 }
 
 export type ActionsTypes = followACType | unfollowACType | setUsersACType
@@ -57,7 +60,7 @@ type setUsersACType = ReturnType<typeof setUsersAC>
 
 export const followAC = (userId: number) => ({type: FOLLOW, userId} as const)
 export const unfollowAC = (userId: number) => ({type: UNFOLLOW, userId} as const)
-export const setUsersAC = (users: Array<UsersType>) => ({type: SET_USERS, users} as const)
+export const setUsersAC = (users: Array<UserType>) => ({type: SET_USERS, users} as const)
 
 
 export default usersReducer;
