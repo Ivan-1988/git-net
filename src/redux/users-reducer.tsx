@@ -1,9 +1,10 @@
 // import {ActionsTypes, PostType, ProfilePageType} from "./store";
 
-
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 
 type PhotoType = {
     small: null | string
@@ -22,16 +23,18 @@ export type UserType = {
 
 export type InitialStateType = {
     users: Array<UserType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
 }
 
-export type ActionsTypes = followACType | unfollowACType | setUsersACType
+export type ActionsTypes = followACType | unfollowACType | setUsersACType | setCurrentPageACType | setUsersTotalCountACType
 
 let initialState = {
-    users: [
-        /*{id: 1, photoUrl: 'https://img.favpng.com/23/14/21/snow-white-coloring-book-dwarf-drawing-sleepy-png-favpng-vRRVNVU8xX46L1JUiDvfqjaFy_t.jpg', followed: false, fullName: 'Dmitry', status: 'some string', location: {city: 'Minsk', country: 'Belarus'}},
-        {id: 2, photoUrl: 'https://img.favpng.com/23/14/21/snow-white-coloring-book-dwarf-drawing-sleepy-png-favpng-vRRVNVU8xX46L1JUiDvfqjaFy_t.jpg', followed: true, fullName: 'Sasha', status: 'I am here', location: {city: 'Moscow', country: 'Russia'}},
-        {id: 3, photoUrl: 'https://img.favpng.com/23/14/21/snow-white-coloring-book-dwarf-drawing-sleepy-png-favpng-vRRVNVU8xX46L1JUiDvfqjaFy_t.jpg', followed: false, fullName: 'Andrew', status: 'I am here too', location: {city: 'Kiev', country: 'Ukraine'}}
-    */]
+    users: [ ],
+    pageSize: 30,
+    totalUsersCount: 0,
+    currentPage: 2
 }
 
 const usersReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
@@ -47,7 +50,13 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionsTyp
                 users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u)
             }
         case "SET_USERS":{
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users}
+        }
+        case "SET_CURRENT_PAGE":{
+            return {...state, currentPage: action.currentPage}
+        }
+        case "SET_TOTAL_USERS_COUNT":{
+            return {...state, totalUsersCount: action.count}
         }
         default:
             return state;
@@ -57,10 +66,14 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionsTyp
 type followACType = ReturnType<typeof followAC>
 type unfollowACType = ReturnType<typeof unfollowAC>
 type setUsersACType = ReturnType<typeof setUsersAC>
+type setCurrentPageACType = ReturnType<typeof setCurrentPageAC>
+type setUsersTotalCountACType = ReturnType<typeof setUsersTotalCountAC>
 
 export const followAC = (userId: number) => ({type: FOLLOW, userId} as const)
 export const unfollowAC = (userId: number) => ({type: UNFOLLOW, userId} as const)
 export const setUsersAC = (users: Array<UserType>) => ({type: SET_USERS, users} as const)
+export const setCurrentPageAC = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
+export const setUsersTotalCountAC = (totalUsersCount: number) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsersCount} as const)
 
 
 export default usersReducer;

@@ -3,6 +3,7 @@ import {MapDispatchToPropsType, MapStateToPropsType} from "./UsersContainer";
 import userPhoto from "../../assets/images/image.jpg";
 import styles from "./users.module.css";
 import axios from "axios";
+import {findAllByDisplayValue} from "@testing-library/react";
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -22,20 +23,45 @@ export type UserType = {
 
 export type GetStateType = {
     items: Array<UserType>
+    totalCount: number
 }
 
 class Users extends React.Component<PropsType> {
 
-    constructor(props: PropsType) {
-        super(props);
-        axios.get<GetStateType>('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-            this.props.setUsers(response.data.items)
+    componentDidMount() {
+        axios.get<GetStateType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then(response => {
+            this.props.setUsers(response.data.items);
+            this.props.setTotalUsersCount(response.data.totalCount);
         });
     }
 
+    onPageChanged = (pageNumber: number) => {
+        this.props.setCurrentPage(pageNumber);
+        axios.get<GetStateType>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+            });
+    }
 
     render(){
+
+        let pagesCount = Math.ceil(this.props.totalUsersCount/this.props.pageSize);
+
+        let pages = [];
+        for (let i=1; i <= pagesCount; i++){
+            pages.push(i);
+        }
+
         return <div>
+            <div>
+                {pages.map(p => {
+                     return <span className={this.props.currentPage === p ? styles.selectedPage : ''}
+                     onClick={(e) => { this.onPageChanged(p) }}>{p}</span>
+                })
+
+                }
+            </div>
             {
                 this.props.users.map(u => <div key={u.id}>
                 <span>
