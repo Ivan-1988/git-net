@@ -1,4 +1,4 @@
-import profileReducer from "./profile-reducer";
+import profileReducer, {ProfileType} from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 
@@ -22,6 +22,7 @@ export type DialogType = {
 export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
+    profile: ProfileType | null
 }
 
 export type MessagePageType = {
@@ -79,7 +80,8 @@ const store: StoreType = {
                 {id: 2, message: "Blabla", likesCount: 11},
                 {id: 2, message: "Dada", likesCount: 11}
             ],
-            newPostText: 'it-kamasutra.com'
+            newPostText: 'it-kamasutra.com',
+            profile: null
         },
         dialogsPage: {
             dialogs: [
@@ -113,7 +115,7 @@ const store: StoreType = {
 
     dispatch(action) { //{ type: 'ADD-POST'}
 
-        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        // this._state.profilePage = profileReducer(this._state.profilePage, action);
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
         this._state.sidebar = sidebarReducer(this._state.sidebar, action);
         this._callSubscriber(this._state);

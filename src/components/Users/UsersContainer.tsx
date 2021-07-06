@@ -8,7 +8,6 @@ import {
     setTotalUsersCount, toggleIsFetching,
     unfollow
 } from "../../redux/users-reducer";
-import {Dispatch} from "redux";
 
 import axios from "axios";
 
