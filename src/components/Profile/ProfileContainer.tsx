@@ -2,8 +2,14 @@ import React from 'react';
 import Profile from "./Profile";
 import axios from "axios";
 import {connect} from "react-redux";
-import {setUserProfile} from "../../redux/profile-reducer";
+import {ProfileType, setUserProfile} from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/redux-store";
+import {RouteComponentProps, withRouter } from 'react-router-dom';
+import Preloader from "../common/Preloader/Preloader";
+
+type PathParamsType = {
+    userId: string | undefined
+}
 
 type ContactsType = {
     facebook: null | string
@@ -31,26 +37,59 @@ export type GetUsersType = {
     photos: PhotoType
 }
 
-class ProfileContainer extends React.Component<any, any> {
+type MapStatePropsType = {
+    profile: ProfileType | null
+}
+
+type MapDispatchPropsType ={
+    setUserProfile: (profile: GetUsersType) => void
+}
+
+type OwnPropsType = MapStatePropsType & MapDispatchPropsType
+
+type PropsType = RouteComponentProps<PathParamsType> & OwnPropsType
+
+class ProfileContainer extends React.Component<PropsType> {
 
     componentDidMount() {
-        axios.get<GetUsersType>(`https://social-network.samuraijs.com/api/1.0/profile/2`)
+        //debugger;
+        let userId = this.props.match.params.userId;
+        if (!userId){
+            userId = '2';
+        }
+        axios.get<GetUsersType>(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
             .then(response => {
                 this.props.setUserProfile(response.data);
             });
     }
 
     render() {
+        // if(!this.props.profile)
+        //     return <Preloader/>
         return (
-            <Profile profile = {this.props.profile} />
+            <Profile {...this.props} profile = {this.props.profile} />
         )
 
     }
 
 }
 
-let mapStateToProps = (state: AppStateType) => ({
+let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     profile: state.profilePage.profile
 })
 
-export default connect(mapStateToProps, {setUserProfile})(ProfileContainer);
+let WithUrlDataContainerComponent = withRouter(ProfileContainer);
+
+export default connect<MapStatePropsType,MapDispatchPropsType, {}, AppStateType>(
+    mapStateToProps, {setUserProfile}
+)(WithUrlDataContainerComponent);
+
+// const con = (mstp, mdtp) => {
+//     return (Component) => {
+//         return <ReduxContext.consumer>{(store) => {
+//             return <Component {...mstp(store.getState())} {...mdtp(store.dispatch.bind(store))}/>
+//         }}</ReduxContext.consumer>
+//     }
+// }
+
+//<MapStatePropsType,MapDispatchPropsType,RouteComponentProps<PathParamsType>, AppStateType>
