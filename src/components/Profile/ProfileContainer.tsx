@@ -2,10 +2,11 @@ import React from 'react';
 import Profile from "./Profile";
 import axios from "axios";
 import {connect} from "react-redux";
-import {ProfileType, setUserProfile} from "../../redux/profile-reducer";
+import {getUserProfile, ProfileType, setUserProfile} from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {RouteComponentProps, withRouter } from 'react-router-dom';
 import Preloader from "../common/Preloader/Preloader";
+import {usersAPI} from "../../api/api";
 
 type PathParamsType = {
     userId: string | undefined
@@ -42,7 +43,7 @@ type MapStatePropsType = {
 }
 
 type MapDispatchPropsType ={
-    setUserProfile: (profile: GetUsersType) => void
+    getUserProfile: (userId: string) => void
 }
 
 type OwnPropsType = MapStatePropsType & MapDispatchPropsType
@@ -57,15 +58,11 @@ class ProfileContainer extends React.Component<PropsType> {
         if (!userId){
             userId = '2';
         }
-        axios.get<GetUsersType>(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-            .then(response => {
-                this.props.setUserProfile(response.data);
-            });
+        this.props.getUserProfile(userId);
     }
 
     render() {
-        // if(!this.props.profile)
-        //     return <Preloader/>
+
         return (
             <Profile {...this.props} profile = {this.props.profile} />
         )
@@ -81,15 +78,5 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 let WithUrlDataContainerComponent = withRouter(ProfileContainer);
 
 export default connect<MapStatePropsType,MapDispatchPropsType, {}, AppStateType>(
-    mapStateToProps, {setUserProfile}
+    mapStateToProps, {getUserProfile}
 )(WithUrlDataContainerComponent);
-
-// const con = (mstp, mdtp) => {
-//     return (Component) => {
-//         return <ReduxContext.consumer>{(store) => {
-//             return <Component {...mstp(store.getState())} {...mdtp(store.dispatch.bind(store))}/>
-//         }}</ReduxContext.consumer>
-//     }
-// }
-
-//<MapStatePropsType,MapDispatchPropsType,RouteComponentProps<PathParamsType>, AppStateType>

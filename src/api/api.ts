@@ -1,5 +1,7 @@
 import axios from "axios";
 import {GetStateComponentDidMountType} from "../components/Users/UsersContainer";
+import {GetUsersType} from "../components/Profile/ProfileContainer";
+import {GetStateHeaderType} from "../components/Header/HeaderContainer";
 
 const instance = axios.create({
     withCredentials: true,
@@ -15,12 +17,19 @@ export const usersAPI = {
         });
     },
     follow(userId: number){
-        return instance.post<any>(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
+        return instance.post<any>(`follow/${userId}`)
     },
     unfollow(userId: number){
-        return instance.delete<any>(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
+        return instance.delete<any>(`follow/${userId}`)
+    },
+    getProfile(userId: string | undefined){
+        return instance.get<GetUsersType>(`profile/` + userId);
     }
-
 }
 
+export const authAPI = {
+    me() {
+        return instance.get<GetStateHeaderType>(`auth/me`)
+    }
+}
 
