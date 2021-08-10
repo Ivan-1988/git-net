@@ -79,7 +79,7 @@ export default compose<React.ComponentType>(
     connect<MapStatePropsType,MapDispatchPropsType, {}, AppStateType>
     (mapStateToProps, {getUserProfile}),
     withRouter,
-    withAuthRdirect
+    //withAuthRdirect
 )(ProfileContainer);
 
 
